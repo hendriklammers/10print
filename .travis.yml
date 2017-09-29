@@ -1,5 +1,24 @@
 language: go
 sudo: false
 go:
-  - 1.8
-  - 1.9
+- 1.8
+- 1.9
+
+env:
+  global:
+    - VERSION=$TRAVIS_TAG
+
+before_deploy:
+  - mkdir -p release
+  - "go build -ldflags '-s -w'"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: gLsqej3Ux3hdRejmXmcmRijGcsyZKBtkpBNDyRuYYTGSoh4+RfL9GX6cUqQaZIGW5qL90tQJfPDSGsw21fHAbGC47lAYSuHOWeD7JGuKkN+M5ekKCD3n5+JWNW18anTn0w1wKudITOyWR1eLuZhwh+QkL8q0v/01gjzO8cGXz7cU2RDS12qGZtgG6i3kHypdk5bvRrQYQNSXyl7ith5i06nu02GDuuN0uefzODpOvMagQzWD9gTh/UyedktnBoEyZY81TjiIYZnCFoLTZEsdaRKADr3PmS6MfGAcw+MGSgHpyXDWvM9F7IEqA5+we13E4khOLK5DT+79D/FlLnm6H5BHnia/IQM0+sQWL4kzD4Xo4IGvGbEPNivkdQ10jkBDldiUCbmaa0bClJQX0IEj7HxUFMYSEvuZM9fBM0tSJMNYfzrSWmFHorcUzyYylzzAEYJ3mbJWQW28xPQpJxJ5EAUneNDAuF8tk4eSo+UdZ2b2LmDyiHF8g2ny2PEr2l0b4IV31r9FiKbFUhOkd8pIcTgTXA5uYACofmaIvkySqmZDUSwEzv2IFcQB5qEBuhBhRRBoGjiTaRgaxR+pXf4d/dI6AzrtJNSC5FrDnoGlsCbYvPmu+hJeGkdZB3v2x4pqSpSyXjgNQyYQf4m3AH/5JpoQT8Ug/k2c/rx5e9WuaOM=
+  file_glob: true
+  file: release/*
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
