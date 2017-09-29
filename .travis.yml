@@ -10,7 +10,7 @@ env:
 
 before_deploy:
   - mkdir -p release
-  - "go build -ldflags '-s -w'"
+  - "go build -ldflags '-s -w' -o release/10print"
 
 deploy:
   provider: releases
